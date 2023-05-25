@@ -21,32 +21,6 @@ export default function MessageBox(props: any) {
   const RoomContext: any = useRoomContext();
   const [message, setMessage] = useState("");
 
-  // const displayHistory = () => {
-  //   for (let i = 0; i < RoomContext.messageHistory.length; i++) {
-  //     const messId = nanoid(8);
-  //     RoomContext.messageHistory[i].author === RoomContext.cookies.username
-  //       ? RoomContext.messageList.push(
-  //           <RightMessage
-  //             message={RoomContext.messageHistory[i].message}
-  //             time={RoomContext.messageHistory[i].timeStamp}
-  //             author={RoomContext.messageHistory[i].author}
-  //             key={messId}
-  //           />
-  //         )
-  //       : RoomContext.messageList.push(
-  //           <LeftMessage
-  //             message={RoomContext.messageHistory[i].message}
-  //             time={RoomContext.messageHistory[i].timeStamp}
-  //             author={RoomContext.messageHistory[i].author}
-  //             key={messId}
-  //           />
-  //         );
-  //   }
-  // };
-
-  // RoomContext.messageList = [];
-  // displayHistory();
-
   const handleChangeMessage = (event: any) => {
     setMessage(event.target.value);
   };
@@ -97,8 +71,8 @@ export default function MessageBox(props: any) {
 
   return (
     <React.Fragment>
-      <Grid item lg={1.3} md={1.3} sm={1.3} xs={1.3}></Grid>
-      <Grid item lg={10.5} md={10.5} sm={10.5} xs={10.5}>
+      <Grid item lg={1.3} md={2} sm={1.3} xs={1.3}></Grid>
+      <Grid item lg={10.5} md={10} sm={10.5} xs={10.5}>
         <Box sx={{ bgcolor: "#edfcc5", height: "100%" }}>
           <Stack>
             <Box
@@ -110,6 +84,7 @@ export default function MessageBox(props: any) {
                 overflowY: "scroll",
               }}
             >
+              {RoomContext.messageHistory.map((message: message) => message)}
               {RoomContext.messageList.map((message: message) => message)}
             </Box>
             <>

@@ -16,6 +16,7 @@ import getFriendsList from "./userData";
 export let currentUser: String = "";
 export let messageListArray: any;
 import { useRoomContext } from "../../contexts/RoomContext";
+import { LeftMessage, RightMessage } from "../MessageBox/DisplayMessage";
 
 import { useEffect, useState } from "react";
 interface message {
@@ -23,6 +24,7 @@ interface message {
   message: String;
   timeStamp: String;
   room: String;
+  messId: String;
 }
 getFriendsList();
 
@@ -56,13 +58,35 @@ export default function DisplayUser(props: any) {
     removeCookies("password");
   };
   const displayHistory = (messageHistory: any) => {
-    RoomContext.setMessageHistory(messageHistory);
+    const messageList: any = [];
+    RoomContext.setMessageHistory([]);
+    RoomContext.setMessageList([]);
+    messageHistory.map((message: message) => {
+      message.author === RoomContext.cookies.username
+        ? messageList.push([
+            <RightMessage
+              message={message.message}
+              time={message.timeStamp}
+              author={message.author}
+              key={message.messId}
+            />,
+          ])
+        : messageList.push([
+            <LeftMessage
+              message={message.message}
+              time={message.timeStamp}
+              author={message.author}
+              key={message.messId}
+            />,
+          ]);
+    });
+    RoomContext.setMessageHistory(messageList);
+    console.log(messageHistory);
   };
   const sendUsernameRoom = async (
     usernameSender: String,
     usernameReceiver: String
   ) => {
-    RoomContext.MessageList = [];
     const userData = {
       username: usernameSender,
       friend: usernameReceiver,
