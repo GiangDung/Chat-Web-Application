@@ -59,8 +59,6 @@ export default function DisplayUser(props: any) {
   };
   const displayHistory = (messageHistory: any) => {
     const messageList: any = [];
-    RoomContext.setMessageHistory([]);
-    RoomContext.setMessageList([]);
     messageHistory.map((message: message) => {
       message.author === RoomContext.cookies.username
         ? messageList.push([
@@ -87,6 +85,8 @@ export default function DisplayUser(props: any) {
     usernameSender: String,
     usernameReceiver: String
   ) => {
+    RoomContext.setMessageHistory([]);
+    RoomContext.setMessageList([]);
     const userData = {
       username: usernameSender,
       friend: usernameReceiver,
